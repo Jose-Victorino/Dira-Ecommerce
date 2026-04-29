@@ -1,0 +1,181 @@
+@use '@/styles/util' as u;
+@use "sass:color";
+@use "sass:map";
+
+$textLight: u.$color-neutral-50;
+$textDark: u.$color-neutral-950;
+$toggleBg: u.$color-neutral-200;
+
+$colors: (
+  "red": hsl(0, 52%, 56%),
+  "green": hsl(120, 52%, 56%),
+  "blue": hsl(211, 95%, 45%),
+  "yellow": hsl(43, 95%, 52%),
+  "light": hsl(214, 6%, 13%),
+  "dark": hsl(214, 12%, 92%),
+);
+
+$size: (
+  "sm": 10px,
+  "md": 16px,
+  "lg": 20px,
+);
+
+@each $name, $value in $colors{
+  .color-#{$name} {
+    --bg-color: #{$value};
+    --bg-hover: #{color.adjust($value, $lightness: -8%)};
+  }
+}
+
+@each $name, $value in $size{
+  .sz-#{$name} {
+    --btn-size: #{$value};
+  }
+}
+
+@mixin setColor($value){
+  &{ color: $value; }
+  svg{ fill: $value; }
+}
+
+@mixin btn-base{
+  justify-content: center;
+  align-items: center;
+  font-size: var(--btn-size);
+  padding: 0.625em 1em;
+  gap: 4px;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+  svg{
+    height: var(--btn-size);
+    width: var(--btn-size);
+  }
+
+  &.iconOnly{
+    padding: 0.75em;
+  }
+}
+
+.btn-{
+  &primary{
+    :global([data-theme=light]) & {
+      --color-text: #{$textLight};
+    }
+    :global([data-theme=dark]) & {
+      --color-text: #{$textLight};
+    }
+  }
+  &secondary{
+  :global([data-theme=light]) & {
+    --color-text: #{$textDark};
+  }
+  :global([data-theme=dark]) & {
+    --color-text: #{$textLight};
+  }
+}
+  &tertiary{
+  :global([data-theme=light]) & {
+    --color-text: #{$textDark};
+  }
+  :global([data-theme=dark]) & {
+    --color-text: #{$textLight};
+  }
+}
+}
+
+.corner-curved{
+  border-radius: 6px;
+}
+.corner-rounded{
+  border-radius: 1.25em;
+}
+
+// solid
+.btn-primary{
+  @include btn-base;
+  @include setColor(var(--color-text));
+  background-color: var(--bg-color);
+  border: 1px solid var(--bg-color);
+
+  &:disabled{
+    opacity: 0.8;
+  }
+  &:hover:not(:disabled) {
+    background-color: var(--bg-hover);
+    border-color: var(--bg-hover);
+  }
+  &.color-dark{
+    @include setColor($textDark);
+  }
+}
+// outline
+.btn-secondary{
+  @include btn-base;
+  @include setColor(var(--color-text));
+  border: 1px solid var(--bg-color);
+  
+  &:disabled{
+    opacity: 0.8;
+  }
+  &:hover:not(:disabled) {
+    background-color: var(--bg-hover);
+    border-color: var(--bg-hover);
+    @include setColor($textLight);
+
+    &.color-dark{
+      @include setColor($textDark);
+    }
+  }
+  &.color-dark{
+    @include setColor($textLight);
+  }
+}
+// link
+.btn-tertiary{
+  @include btn-base;
+  @include setColor(var(--color-text));
+  border: 1px solid transparent;
+  
+  &:disabled{
+    opacity: 0.8;
+  }
+  &:hover:not(:disabled){
+    text-decoration: underline;
+  }
+  &.color-dark{
+    @include setColor($textLight);
+  }
+}
+// toggle
+.btn-toggle{
+  font-size: var(--btn-size);
+  position: relative;
+  background-color: $toggleBg;
+  height: 1.8em;
+  aspect-ratio: 2;
+  border-radius: 0.9em;
+  transition: background-color 0.2s ease-in-out;
+  
+  & > div{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    height: inherit;
+    aspect-ratio: 1;
+    border-radius: inherit;
+    border: 3px solid $toggleBg;
+    transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  }
+  &[data-toggle="true"]{
+    background-color: var(--bg-color);
+
+    & > div{
+      transform: translateX(100%);
+      border-color: var(--bg-color);
+    }
+  }
+}

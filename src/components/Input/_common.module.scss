@@ -1,0 +1,54 @@
+@use '@/styles/util' as u;
+@use "sass:color";
+
+$padding: 0.5em;
+$blue: hsl(222, 71%, 51%);
+$blue-bg: u.get-border-color($blue);
+$bg: u.$color-neutral-50;
+
+@mixin inputField{
+  :global([data-theme=light]) & {
+    --color-label: #{u.$color-neutral-600};
+    --color-dropdown: #{u.$color-neutral-100};
+    --color-dropdown-hover: #{u.$color-neutral-100};
+  }
+  :global([data-theme=dark]) & {
+    --color-label: #{u.$color-neutral-400};
+    --color-dropdown: #{u.$color-neutral-700};
+    --color-dropdown-hover: #{u.$color-neutral-800};
+  }
+
+  .input{
+    background-color: var(--bg);
+    display: flex;
+    padding: $padding;
+    width: 100%;
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 1px var(--color-border);
+  }
+
+  input, textarea{
+    background-color: transparent;
+    flex: 1 1 auto;
+  }
+
+  &:has(input:focus-visible, textarea:focus-visible, input.focused, textarea.focused){
+    .textLabel{
+      color: u.$color-primary-600;
+    }
+    .input{
+      box-shadow: inset 0 0 0 2px u.$color-primary-600;
+    }
+    &:has(input.error) .input{
+      box-shadow: inset 0 0 0 2px u.$color-error;
+    }
+  }
+  &:has(input.error, textarea.error){
+    .textLabel{
+      color: u.$color-error;
+    }
+    .input{
+      box-shadow: inset 0 0 0 1px u.$color-error;
+    }
+  }
+}

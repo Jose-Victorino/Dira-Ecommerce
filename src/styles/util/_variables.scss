@@ -1,0 +1,54 @@
+@use "sass:list";
+
+$font1: 'Lato', sans-serif;
+$font2: 'Geist', sans-serif;
+
+// Size Clamps (560px - 720px)
+$sz-48-64: clamp(48px, -0.5rem + 10vw, 64px);
+$sz-32-48: clamp(32px, -1.5rem + 10vw, 48px);
+$sz-28-32: clamp(28px, 0.875rem + 2.5vw, 32px);
+$sz-24-28: clamp(24px, 0.625rem + 2.5vw, 28px);
+$sz-20-24: clamp(20px, 0.375rem + 2.5vw, 24px);
+$sz-16-20: clamp(16px, 0.125rem + 2.5vw, 20px);
+$sz-14-16: clamp(14px, 0.4375rem + 1.25vw, 16px);
+$sz-12-16: clamp(12px, -0.25rem + 2.8571vw, 16px);
+$sz-12-14: clamp(12px, 0.3125rem + 1.25vw, 14px);
+$sz-10-12: clamp(10px, 0.1875rem + 1.25vw, 12px);
+
+// grayscale
+$color-neutral-50:  hsl(225, 22%, 96%);
+$color-neutral-100: hsl(225, 5%, 90%);
+$color-neutral-200: hsl(216, 4%, 82%);
+$color-neutral-300: hsl(220, 3%, 70%);
+$color-neutral-400: hsl(223, 3%, 59%);
+$color-neutral-500: hsl(223, 3%, 48%);
+$color-neutral-600: hsl(223, 4%, 37%);
+$color-neutral-700: hsl(223, 5%, 29%);
+$color-neutral-800: hsl(230, 7%, 18%);
+$color-neutral-900: hsl(225, 10%, 11%);
+$color-neutral-950: hsl(210, 20%, 4%);
+
+// palette
+$color-primary-50:  #CFF8FF;
+$color-primary-100: #B0DDFF;
+$color-primary-200: #8CC2FF;
+$color-primary-300: #68A7FF;
+$color-primary-400: #438CF0;
+$color-primary-500: #006FE6;
+$color-primary-600: #004DD2;
+$color-primary-700: #002CB2;
+$color-primary-800: #00008D;
+$color-primary-900: #000065;
+$color-primary-950: #0C0043;
+
+$color-primary: hsl(218, 100%, 41%);
+$color-secondary: hsl(144, 69%, 43%);
+$color-accent: hsl(211, 100%, 89%);
+
+$color-success: hsl(120, 52%, 56%);
+$color-warning: hsl(50, 79%, 61%);
+$color-error: hsl(0, 52%, 56%);
+$color-link: hsl(211, 100%, 50%);
+
+// gradient
+$gr-light-gray: linear-gradient(120deg, $color-neutral-300 30%, $color-neutral-200 100%);

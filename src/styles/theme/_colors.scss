@@ -1,0 +1,52 @@
+@use '@/styles/util' as u;
+@use "sass:color";
+@use "sass:map";
+@use "sass:list";
+@use "sass:meta";
+
+$allowed-vars: (
+  bg, 
+  color-text, color-text-dimmed, color-text-inv,
+  color-border,
+);
+
+$themes: (
+  light: (
+    bg: #{white},
+    color-text: #{u.$color-neutral-950},
+    color-text-dimmed: #{u.$color-neutral-600},
+    color-text-inv: #{u.$color-neutral-50},
+    color-border: #{u.$color-neutral-500},
+  ),
+  dark: (
+    bg: #{u.$color-neutral-900},
+    color-text: #{u.$color-neutral-50},
+    color-text-dimmed: #{u.$color-neutral-400},
+    color-text-inv: #{u.$color-neutral-50},
+    color-border: #{u.$color-neutral-400},
+  ),
+);
+
+@each $theme-name, $theme-map in $themes {
+  $css-vars: ();
+
+  @each $key, $value in $theme-map {
+    @if not list.index($allowed-vars, $key) {
+      @error "Invalid variable `#{$key}` in theme `#{$theme-name}`. Allowed: #{$allowed-vars}";
+    }
+
+    $css-vars: map.set($css-vars, $key, $value);
+  }
+
+  $selectors: if(
+    sass($theme-name == light):
+    ':root, [data-theme="#{$theme-name}"]';
+    else: '[data-theme="#{$theme-name}"]'
+  );
+
+  #{$selectors} {
+    @each $key, $value in $css-vars {
+      --#{$key}: #{$value};
+    }
+  }
+}

@@ -1,0 +1,79 @@
+@use '@/styles/util' as u;
+@use "sass:color";
+
+.alertOverlay{
+  background-color: hsla(0, 0%, 0%, 0.3);
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.header{
+  padding-bottom: 15px;
+}
+.footer{
+  padding-top: 15px;
+}
+
+.alertContainer{
+  background-color: var(--bg);
+  display: grid;
+  grid-template-rows: max-content 1fr max-content;
+  padding: 20px;
+  height: 300px;
+  width: 480px;
+  max-width: calc(100% - 30px);
+  border-radius: 6px;
+}
+
+.cancel, .confirm{
+  line-height: 1;
+  padding: 0.5em 1em;
+  border-radius: 3px;
+  border: 1px solid u.$color-neutral-800;
+  transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
+
+  &:hover{
+    border-color: u.$color-neutral-900;
+  }
+  &:focus-visible{
+    box-shadow: 0 0 0 4px color.adjust(u.$color-primary-600, $alpha: -0.7);
+  }
+}
+
+.confirm{
+  background-color: u.$color-neutral-800;
+  color: u.$color-neutral-50;
+
+  &:hover{
+    background-color: u.$color-neutral-900;
+  }
+}
+.cancel{
+  &:hover{
+    background-color: u.$color-neutral-900;
+    color: u.$color-neutral-50;
+  }
+}
+
+.checkSVG, .exclamationSVG, .infoSVG, .questionSVG, .errorSVG{
+  height: 90px;
+  width: 90px;
+}
+.checkSVG{
+  fill: hsl(120, 48%, 56%);
+}
+.exclamationSVG{
+  fill: hsl(50, 48%, 56%);
+}
+.infoSVG{
+  fill: hsl(218, 4%, 56%);
+}
+.questionSVG{
+  fill: hsl(222, 48%, 56%);
+}
+.errorSVG{
+  fill: hsl(0, 48%, 56%);
+}
