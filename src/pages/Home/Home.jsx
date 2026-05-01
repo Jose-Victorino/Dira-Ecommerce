@@ -4,7 +4,7 @@ import useDocumentTitle from '@/hooks/useDocumentTitle'
 import Carousel from '@/components/Carousel/Carousel'
 
 import s from './Home.module.scss'
-import AutoplaySlider from '../../components/Carousel/AutoplaySlider'
+import AutoplaySlider from '@/components/Carousel/AutoplaySlider'
 
 import cat1 from '@/assets/E104JFHN.jpg'
 import cat2 from '@/assets/E10A101X.jpg'
