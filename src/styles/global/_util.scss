@@ -6,23 +6,27 @@
 }
 .container{
   width: 1300px;
-  max-width: 100%;
+  max-width: calc(100% - 30px);
   margin-inline: auto;
 
   @container main-content (width < 1400px){
-    width: 1140px;
+    width: 1200px;
   }
   @container main-content (width < 1200px){
-    width: 940px;
+    width: 980px;
   }
   @container main-content (width < 980px){
     width: 720px;
   }
-  @container main-content (width < 780px){
-    width: 540px;
+  @container main-content (width < 720px){
+    width: 560px;
   }
   @container main-content (width < 560px){
     width: calc(100% - 30px);
+  }
+  @container main-content (width < 450px){
+    width: calc(100% - 20px);
+    max-width: calc(100% - 20px);
   }
 }
 

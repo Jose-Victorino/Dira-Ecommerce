@@ -1,0 +1,107 @@
+@use '@/styles/util' as u;
+@use 'sass:string';
+
+$color: string.slice("#{u.$color-primary-600}", 2);
+
+.hero{
+  background-image: u.$gr-light-gray;
+  height: 100vh;
+  height: 100dvh;
+  height: 100svh;
+
+  @include u.breakpoint(mobile-s){
+    height: unset;
+    aspect-ratio: 2 / 3;
+  }
+}
+
+.categoryCont{
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+
+  @include u.breakpoint(tablet-s){
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+.sliderCont{
+  height: 440px;
+}
+
+.categoryList{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  li{ display: flex; }
+  a{
+    position: relative;
+    overflow: hidden;
+    padding-block: 0.75em;
+    padding-inline: 1.5em 1em;
+    width: 100%;
+    min-width: 240px;
+    white-space: nowrap;
+
+    &:hover{
+      color: u.$color-primary-600;
+
+      &::before{
+        content: '';
+        background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="%23#{$color}" viewBox="0 0 640 640"%3E%3Cpath d="M439.1 297.4C451.6 309.9 451.6 330.2 439.1 342.7L279.1 502.7C266.6 515.2 246.3 515.2 233.8 502.7C221.3 490.2 221.3 469.9 233.8 457.4L371.2 320L233.9 182.6C221.4 170.1 221.4 149.8 233.9 137.3C246.4 124.8 266.7 124.8 279.2 137.3L439.2 297.3z"/%3E%3C/svg%3E');
+        position: absolute;
+        display: inline-block;
+        top: 50%;
+        left: 0.5em;
+        transform: translate(-50%, -50%);
+        height: 1.25em;
+        width: 1.25em;
+      }
+    }
+  }
+}
+
+@include u.breakpoint(tablet-l){
+  .categoryList a{
+    min-width: unset;
+  }
+  .sliderCont{
+    height: unset;
+    min-width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+}
+@include u.breakpoint(tablet-s){
+  .categoryList{
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    li, a{
+      width: fit-content;
+    }
+    a{
+      padding-inline: 0.5em;
+    }
+  }
+}
+
+.parallaxCont{
+  position: relative;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  height: 400px;
+
+  &::before{
+    content: '';
+    background-color: hsla(0, 0%, 0%, 0.3);
+    position: absolute;
+    inset: 0;
+  }
+
+  @include u.breakpoint(mobile-l){
+    background-attachment: unset;
+    height: 260px;
+  }
+}

@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useLocation, NavLink, Link } from 'react-router'
 import useToggle from '@/hooks/useToggle'
@@ -90,9 +90,26 @@ function MobileNavigation({currentLinks, closeMenu, menuValue}){
 
 function Navigation() {
   const { pathname } = useLocation()
+  const [atTop, setAtTop] = useState(() => {
+    if(typeof window === 'undefined') return true
+
+    return window.scrollY === 0
+  })
   const menu = useToggle()
+  
   const currentLinks = ['profile', 'orders'].includes(pathname.split('/')[1])
     ? PROFILE_NAV_LINKS : MAIN_NAV_LINKS
+  
+  const isHome = pathname === '/'
+
+  useEffect(() => { 
+    const handleScroll = () => setAtTop(window.scrollY === 0)
+
+    handleScroll()
+    window.addEventListener("scroll", handleScroll)
+
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [pathname])
 
   const openMenu = () => {
     root.inert = true
@@ -105,7 +122,7 @@ function Navigation() {
 
   return (
     <>
-      <header className={cn('container-parent', s.header)}>
+      <header className={cn('container-parent', {[s.atTop]: isHome && atTop}, s.header)}>
         <section className={s.top}>
           <div className='container flex a-center h-100'>
             <Marquee text='Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, sunt?'/>

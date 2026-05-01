@@ -2,6 +2,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { ParallaxProvider } from 'react-scroll-parallax'
 import { GlobalProvider } from '@/context/GlobalContext'
 
 import App from './App'
@@ -35,14 +36,16 @@ function withProviders(providers, children) {
 const providers = [
   [BrowserRouter],
   [QueryClientProvider, { client: queryClient }],
+  [ParallaxProvider],
   [GlobalProvider],
 ]
+const envType = import.meta.env.ENV_TYPE
 
 createRoot(document.getElementById('root')).render(
   withProviders(providers,
     <>
       <App />
-      <ReactQueryDevtools />
+      {envType !== 'production' && <ReactQueryDevtools />}
     </>
   )
 )

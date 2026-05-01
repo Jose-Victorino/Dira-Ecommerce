@@ -1,0 +1,8 @@
+@use '@/styles/util' as u;
+
+.img{
+  background-image: u.$gr-light-gray;
+  aspect-ratio: 1;
+  object-fit: cover;
+  width: 100%;
+}

@@ -2,8 +2,16 @@
 
 :global(#root):has(.main){
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: 1fr auto;
   min-height: 100vh;
   min-height: 100dvh;
   min-height: 100svh;
+}
+
+.main{
+  
+  &.isHome{
+    font-size: u.$sz-14-16;
+    margin-top: 5.5em;
+  }
 }

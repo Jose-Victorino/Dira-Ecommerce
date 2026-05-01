@@ -1,23 +1,46 @@
 @use '@/styles/util' as u;
+@use 'sass:color';
 
 .header{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
   box-shadow: 0 0 20px 5px hsla(0, 0%, 0%, 0.05);
+  font-size: u.$sz-14-16;
 
   svg{
     stroke: u.$color-neutral-950;
+  }
+
+  &.atTop{
+    box-shadow: unset;
+
+    .top{
+      background-color: color.adjust(u.$color-primary-950, $alpha: -0.7);
+    }
+    .bottom{
+      background-color: transparent;
+      color: white;
+
+      svg{
+        stroke: white;
+      }
+    }
+    
   }
 }
 
 .top{
   background-color: u.$color-primary-950;
   color: white;
-  height: 30px;
+  padding-block: 0.25em;
 }
 
 .bottom{
   position: relative;
   background-color: white;
-  height: 58px;
+  height: 3.5em;
 }
 .navLink{
   height: fit-content;
@@ -58,7 +81,7 @@
   }
 }
 
-@include u.breakpoint(s){
+@include u.breakpoint(tablet-s){
   .bottom .nav{
     display: none;
   }

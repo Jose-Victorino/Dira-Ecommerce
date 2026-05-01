@@ -1,0 +1,48 @@
+@use '@/styles/util' as u;
+
+.viewport{
+  overflow: hidden;
+
+  &::before{
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: hsla(0, 0%, 0%, 0.3);
+    z-index: 1;
+  }
+}
+.slideList{
+  touch-action: pan-y pinch-zoom;
+
+  li{
+    display: flex;
+    background-image: u.$gr-light-gray;
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+  img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+.dotList{
+  font-size: u.$sz-14-16;
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+  display: flex;
+  z-index: 2;
+  gap: 0.5em;
+}
+.dot{
+  background-color: u.$color-neutral-300;
+  height: 0.75em;
+  width: 0.75em;
+  border-radius: 50%;
+
+  &.selected{
+    background-color: u.$color-neutral-100;
+    opacity: 1;
+  }
+}

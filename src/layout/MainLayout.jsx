@@ -1,5 +1,6 @@
 import React from 'react'
-import { Outlet } from 'react-router'
+import { useLocation, Outlet } from 'react-router'
+import cn from 'classnames'
 
 import Navigation from '@/components/Navigation/Navigation'
 import Footer from '@/components/Footer/Footer'
@@ -7,10 +8,14 @@ import Footer from '@/components/Footer/Footer'
 import s from './MainLayout.module.scss'
 
 function MainLayout() {
+  const { pathname } = useLocation()
+
+  const isHome = pathname === '/'
+
   return (
     <>
       <Navigation />
-      <main className={s.main}>
+      <main className={cn('container-parent', s.main, {[s.isHome]: !isHome})}>
         <Outlet />
       </main>
       <Footer />

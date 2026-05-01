@@ -79,11 +79,12 @@
 }
 
 $breakpoints: (
-  xl: 1400px,
-  l: 1200px,
-  m: 980px,
-  s: 780px,
-  xs: 560px,
+  laptop-l: 1400px,
+  laptop-s: 1200px,
+  tablet-l: 980px,
+  tablet-s: 720px,
+  mobile-l: 560px,
+  mobile-s: 450px,
 );
 
 @mixin breakpoint($size, $operation: less){

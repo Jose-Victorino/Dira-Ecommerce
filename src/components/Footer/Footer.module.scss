@@ -29,7 +29,7 @@
   }
 }
 
-@include u.breakpoint(s){
+@include u.breakpoint(tablet-s){
   .left{
     width: 100%;
   }

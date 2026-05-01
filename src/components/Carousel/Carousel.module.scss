@@ -1,0 +1,35 @@
+@use '@/styles/util' as u;
+
+.viewport{
+  overflow: hidden;
+}
+
+.slideList{
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+  margin: 0 -0.5em;
+
+  li{
+    flex: 0 0 calc(100% / 5);
+    min-width: 0;
+    padding: 0 0.5em;
+    
+    @include u.breakpoint(tablet-l){
+      flex-basis: calc(100% / 3);
+    }
+    @include u.breakpoint(mobile-l){
+      flex-basis: calc(100% / 2);
+    }
+  }
+}
+.prev, .next{
+  display: flex;
+
+  &:disabled{
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  svg{
+    fill: u.$color-neutral-950;
+  }
+}
