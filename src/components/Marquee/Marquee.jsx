@@ -30,11 +30,20 @@ function Marquee({ text = '' }) {
   const duration = width / 45
 
   return (
-    <div ref={containerRef} className={s.marquee}>
+    <div
+      ref={containerRef}
+      className={s.marquee}
+      role='region'
+      aria-label={text}
+    >
       <div
         ref={trackRef}
         className={s.track}
-        style={{'--distance': `${width}px`, animationDuration: `${duration}s`}}
+        style={{
+          '--distance': `${width}px`,
+          animationDuration: `${duration}s`
+        }}
+        aria-hidden='true'
       >
         {items.map((t, i) => <p key={i}>{t}</p>)}
       </div>
