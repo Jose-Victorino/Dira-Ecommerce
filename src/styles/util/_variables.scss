@@ -1,7 +1,8 @@
 @use "sass:list";
 
-$font1: 'Lato', sans-serif;
-$font2: 'Geist', sans-serif;
+$font1: 'Geist', sans-serif;
+$font2: 'Lato', sans-serif;
+$font-logo: 'Limelight', sans-serif;
 
 // Size Clamps (560px - 720px)
 $sz-48-64: clamp(48px, -0.5rem + 10vw, 64px);
@@ -29,17 +30,17 @@ $color-neutral-900: hsl(225, 10%, 11%);
 $color-neutral-950: hsl(210, 20%, 4%);
 
 // palette
-$color-primary-50:  #CFF8FF;
-$color-primary-100: #B0DDFF;
-$color-primary-200: #8CC2FF;
-$color-primary-300: #68A7FF;
-$color-primary-400: #438CF0;
-$color-primary-500: #006FE6;
-$color-primary-600: #004DD2;
-$color-primary-700: #002CB2;
-$color-primary-800: #00008D;
-$color-primary-900: #000065;
-$color-primary-950: #0C0043;
+$color-primary-50:  #E1F5FF;
+$color-primary-100: #C4DAFF;
+$color-primary-200: #A5BEF7;
+$color-primary-300: #87A4E4;
+$color-primary-400: #6989D2;
+$color-primary-500: #406ACE;
+$color-primary-600: #2E51AD;
+$color-primary-700: #17358F;
+$color-primary-800: #061A6E;
+$color-primary-900: #01004C;
+$color-primary-950: #04002E;
 
 $color-primary: hsl(218, 100%, 41%);
 $color-secondary: hsl(144, 69%, 43%);

@@ -1,0 +1,79 @@
+@use '@/styles/util' as u;
+
+.header{
+  box-shadow: 0 0 20px 5px hsla(0, 0%, 0%, 0.05);
+
+  svg{
+    stroke: u.$color-neutral-950;
+  }
+}
+
+.top{
+  background-color: u.$color-primary-950;
+  color: white;
+  height: 30px;
+}
+
+.bottom{
+  position: relative;
+  background-color: white;
+  height: 58px;
+}
+.navLink{
+  height: fit-content;
+
+  li{
+    display: flex;
+    height: fit-content;
+  }
+
+  a.active, a:hover{
+    color: u.$color-primary-600;
+  }
+}
+
+.openMenu{
+  display: none;
+}
+
+.mobileNav{
+  background: u.$color-neutral-100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  display: none;
+  grid-template-rows: max-content 1fr max-content;
+  height: 100vh;
+  height: 100dvh;
+  height: 100svh;
+  max-width: 80vw;
+  width: clamp(200px, 35%, 240px);
+  box-shadow: 0 0 20px 5px hsla(0, 0%, 0%, 0.05);
+  transform: translateX(-100%);
+  transition: transform 0.25s ease-in-out;
+
+  svg{
+    stroke: u.$color-neutral-950;
+  }
+}
+
+@include u.breakpoint(s){
+  .bottom .nav{
+    display: none;
+  }
+  .openMenu{
+    display: flex;
+  }
+  
+  .userCont{
+    display: none;
+  }
+  .mobileNav{
+    display: grid;
+    
+    &.open{
+      transform: translateX(0%);
+    }
+  }
+}

@@ -50,6 +50,20 @@ $fallback-statuses: (
   }
 }
 
+// ? svg
+.svg-lg{
+  height: u.$sz-24-28;
+  width: u.$sz-24-28;
+}
+.svg-md{
+  height: u.$sz-20-24;
+  width: u.$sz-20-24;
+}
+.svg-sm{
+  height: u.$sz-16-20;
+  width: u.$sz-16-20;
+}
+
 .list-unordered{
   list-style: disc;
   padding-left: 20px; 
@@ -147,6 +161,9 @@ $fallback-statuses: (
 
   .w-#{$val_i}{
     width: $val_i * 1%;
+  }
+  .h-#{$val_i}{
+    height: $val_i * 1%;
   }
 }
 

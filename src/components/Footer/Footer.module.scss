@@ -1,0 +1,36 @@
+@use '@/styles/util' as u;
+
+.footer{
+  background-color: u.$color-neutral-100;
+}
+
+.main{
+  justify-content: space-around;
+  padding: 60px 0 40px;
+}
+.socmed{
+  display: flex;
+  gap: 15px;
+
+  li, a{
+    display: flex;
+  }
+  svg{
+    fill: u.$color-neutral-950;
+  }
+}
+.navLink{
+  li{
+    display: flex;
+    justify-content: center;
+  }
+  a:hover{
+    text-decoration: underline;
+  }
+}
+
+@include u.breakpoint(s){
+  .left{
+    width: 100%;
+  }
+}

@@ -81,6 +81,7 @@ Of course, no one template will serve all projects since your needs may be diffe
 ├─`assets/` — images and svgs  
 ├─`components/` — UI components grouped by feature  
 ├─`context/` — global context and state  
+├─`features/` — app features  
 ├─`hooks/` — custom hooks  
 ├─`layout/` — component layouts  
 ├─`library/` — utility / helpers  

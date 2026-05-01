@@ -1,0 +1,14 @@
+@use '@/styles/util' as u;
+
+.logo{
+  font-family: u.$font-logo;
+  letter-spacing: 10%;
+  text-transform: uppercase;
+  
+  &.l{
+    font-size: u.$sz-32-48;
+  }
+  &.m{
+    font-size: u.$sz-20-24;
+  }
+}
