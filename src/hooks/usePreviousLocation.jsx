@@ -22,8 +22,8 @@ export default function usePreviousLocation() {
     if(prev) localStorage.setItem(STORAGE_KEY, JSON.stringify(prev))
     setPrevLocation(prev)
 
-    currentRef.current = location.pathname
-  }, [location.pathname])
+    currentRef.current = location
+  }, [location])
 
   return prevLocation
 }
