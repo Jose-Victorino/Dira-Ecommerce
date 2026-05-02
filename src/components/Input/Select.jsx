@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import cn from 'classnames'
 
 import s from './Select.module.scss'
@@ -13,13 +13,12 @@ function Select({ name, value = '', options, onChange, onBlur, className, ...res
 
   const entries = Object.entries(options)
 
-  const filteredOptions = useMemo(() => {
+  const filteredOptions = () => {
     if(mode !== MODE.TYPING) return entries
 
     return entries.filter(([, v]) => v.toLowerCase().includes(value.toLowerCase()))
-  }, [options, value])
-  
-  
+  }
+
   useEffect(() => {
     if(!isOpen) return
     const handleClickOutside = (e) => {

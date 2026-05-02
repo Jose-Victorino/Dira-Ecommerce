@@ -18,14 +18,14 @@ function Carousel({ id, cards = [] }) {
 
   const carouselId = `${id ? `${id}-` : ''}product-carousel`
 
-  const updateButtons = () => {
-    if(!emblaApi) return
-    setCanPrev(emblaApi.canScrollPrev())
-    setCanNext(emblaApi.canScrollNext())
-  }
-
   useEffect(() => {
     if(!emblaApi) return
+
+    const updateButtons = () => {
+      if(!emblaApi) return
+      setCanPrev(emblaApi.canScrollPrev())
+      setCanNext(emblaApi.canScrollNext())
+    }
 
     updateButtons()
 

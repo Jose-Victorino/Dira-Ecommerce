@@ -1,10 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
 export default function useQueryParams({ shape, onError = 'clear' }){
   const [searchParams, setSearchParams] = useSearchParams()
-
-  let hasError = false
+  const [isError, setIsError] = useState(true)
 
   const values = Object.entries(shape).reduce((acc, [key, schema = null]) => {
     let value = null
@@ -13,8 +12,8 @@ export default function useQueryParams({ shape, onError = 'clear' }){
     if(inferred === 'number'){
       const temp = searchParams.get(key)
       const parsed = temp ? parseInt(temp) : null
-      if(Number.isNaN(parsed))
-        hasError = true
+
+      if(Number.isNaN(parsed)) setIsError(true)
       else value = parsed
     }
     if(inferred === 'string'){
@@ -26,14 +25,14 @@ export default function useQueryParams({ shape, onError = 'clear' }){
     if(inferred === 'object'){
       const temp = searchParams.get(key)
       try{ value = JSON.parse(temp) }
-      catch{ hasError = true } 
+      catch{ setIsError(true) } 
     }
     
     if(value !== null && schema){
       try{
         schema.validateSync(value)
       } catch{
-        hasError = true
+        setIsError(true)
         value = null
       }
     }
@@ -42,11 +41,11 @@ export default function useQueryParams({ shape, onError = 'clear' }){
   }, {})
   
   useEffect(() => {
-    if(!hasError) return
+    if(!isError) return
     
     if(onError === 'clear')
       setSearchParams(new URLSearchParams())
-  }, [searchParams])
+  }, [isError, onError, searchParams, setSearchParams])
 
   const handleSetQuery = (params) => {
     const next = new URLSearchParams()

@@ -8,6 +8,8 @@ import cn from 'classnames'
 import Logo from '@/Components/Logo/Logo'
 import Marquee from '@/components/Marquee/Marquee'
 
+import { scrollReset } from '@/library/Util'
+
 import s from './Navigation.module.scss'
 
 const root = document.getElementById('root')
