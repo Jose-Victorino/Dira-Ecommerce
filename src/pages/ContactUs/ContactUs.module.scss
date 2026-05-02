@@ -1,1 +1,19 @@
 @use '@/styles/util' as u;
+
+body:has(.container){
+  background-color: u.$color-neutral-50;
+}
+
+.container{
+  & > *{
+    height: fit-content;
+    margin-inline: auto;
+  }
+  svg{
+    fill: u.$color-neutral-950;
+  }
+}
+
+.form{
+  width: 400px;
+}

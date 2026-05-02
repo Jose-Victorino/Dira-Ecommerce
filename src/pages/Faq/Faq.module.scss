@@ -1,1 +1,38 @@
 @use '@/styles/util' as u;
+
+.grid{
+  @include u.grid-repeat-column(auto-fit, 310px);
+  gap: 30px;
+}
+
+.accordion{
+  border-bottom: 1px solid u.$color-neutral-300;
+
+  &.show{
+    .header svg{
+      transform: rotateZ(180deg);
+    }
+    .content{
+      padding-bottom: 15px;
+      height: auto;
+    }
+  }
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  padding-block: 15px;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.content{
+  height: 0;
+  overflow: hidden;
+  
+  ul{
+    list-style-type: disc;
+    padding-left: 20px;
+  }
+}

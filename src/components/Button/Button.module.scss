@@ -9,7 +9,7 @@ $toggleBg: u.$color-neutral-200;
 $colors: (
   "red": hsl(0, 52%, 56%),
   "green": hsl(120, 52%, 56%),
-  "blue": hsl(211, 95%, 45%),
+  "blue": u.$color-primary-500,
   "yellow": hsl(43, 95%, 52%),
   "light": hsl(214, 6%, 13%),
   "dark": hsl(214, 12%, 92%),
