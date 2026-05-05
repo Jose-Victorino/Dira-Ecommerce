@@ -4,6 +4,11 @@
 .inputCont{
   @include c.inputField;
 
+  &.span{
+    flex: 1;
+    min-width: 0;
+  }
+
   .textLabel{
     // color: color.mix(var(--ui-success) 10%, transparent, $method: oklch);
     width: fit-content;
@@ -22,6 +27,8 @@
     }
   }
   input{
+    max-width: 100%;
+
     &[type="color"]{
       padding: 0;
       border: none;

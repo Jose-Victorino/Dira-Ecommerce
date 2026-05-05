@@ -1,0 +1,71 @@
+@use '@/styles/util' as u;
+
+.slider{
+  aspect-ratio: 1;
+}
+
+.viewport{
+  overflow: hidden;
+  height: 100%;
+}
+
+.slideList{
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+  height: 100%;
+
+  li{
+    display: flex;
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+
+  img{
+    background-image: u.$gr-light-gray;
+    object-fit: cover;
+    height: 100%;
+  }
+}
+.prev, .next{
+  position: absolute;
+  display: flex;
+  top: 50%;
+  z-index: 1;
+  transform: translateY(-50%);
+
+  &:disabled{
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  svg{
+    fill: u.$color-neutral-950;
+  }
+}
+.prev{
+  left: 10px;
+}
+.next{
+  right: 10px;
+}
+
+.dotList{
+  font-size: u.$sz-14-16;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  z-index: 2;
+  gap: 0.5em;
+}
+.dot{
+  background-color: u.$color-neutral-300;
+  height: 0.75em;
+  width: 0.75em;
+  border-radius: 50%;
+
+  &.selected{
+    background-color: u.$color-neutral-100;
+    opacity: 1;
+  }
+}

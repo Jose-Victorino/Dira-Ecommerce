@@ -6,13 +6,14 @@ import cn from 'classnames'
 import s from './AutoplaySlider.module.scss'
 
 function AutoplaySlider({ images = [] }) {
+  const [scrollSnaps, setScrollSnaps] = useState([])
+  const [selectedSnap, setSelectedSnap] = useState(0)
+
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     watchDrag: false,
+    align: 'start',
   }, [Autoplay({ delay: 5_000, playOnInit: true })])
-
-  const [scrollSnaps, setScrollSnaps] = useState([])
-  const [selectedSnap, setSelectedSnap] = useState(0)
   
   const scrollTo = (index) => emblaApi?.scrollTo(index)
   const setupSnaps = (emblaApi) => setScrollSnaps(emblaApi.scrollSnapList())
@@ -27,6 +28,12 @@ function AutoplaySlider({ images = [] }) {
     emblaApi.on('reInit', setupSnaps)
     emblaApi.on('reInit', setActiveSnap)
     emblaApi.on('select', setActiveSnap)
+
+    return () => {
+      emblaApi.off('reInit', setupSnaps)
+      emblaApi.off('reInit', setActiveSnap)
+      emblaApi.off('select', setActiveSnap)
+    }
   }, [emblaApi])
 
   return (

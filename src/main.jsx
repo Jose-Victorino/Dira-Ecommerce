@@ -3,7 +3,8 @@ import { BrowserRouter } from 'react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ParallaxProvider } from 'react-scroll-parallax'
-import { GlobalProvider } from '@/context/GlobalContext'
+import { GlobalProvider } from '@/context/Global'
+import { scan } from 'react-scan'
 
 import App from './App'
 
@@ -39,7 +40,13 @@ const providers = [
   [ParallaxProvider],
   [GlobalProvider],
 ]
+
 const envType = import.meta.env.ENV_TYPE
+
+scan({
+  enabled: false && envType !== 'production',
+  log: true,
+})
 
 createRoot(document.getElementById('root')).render(
   withProviders(providers,

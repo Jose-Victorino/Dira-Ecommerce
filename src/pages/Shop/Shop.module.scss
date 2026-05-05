@@ -1,1 +1,36 @@
 @use '@/styles/util' as u;
+
+.shop{
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 30px;
+}
+
+.sidebar{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  & > div{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  & :not(:first-child) strong{
+    padding-top: 0.25em;
+    border-top: 1px solid u.$color-neutral-500;
+  }
+  strong{
+    text-transform: capitalize;
+  }
+}
+.optionList{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.productList{
+  @include u.grid-repeat-column(auto-fill, 200px, 1fr 1fr);
+  gap: 20px;
+}

@@ -38,7 +38,7 @@
   filter: drop-shadow($left $top $blur $color);
 }
 
-@mixin grid-repeat-column($repeat, $width) {    
+@mixin grid-repeat-column($repeat, $width, $mobile-template: 1fr){
   @if not(meta.type-of($repeat) == number or $repeat == auto-fit or $repeat == auto-fill){
     @error "Invalid value for $repeat. Use a number, auto-fit, or auto-fill.";
   }
@@ -46,8 +46,8 @@
   display: grid;
   grid-template-columns: repeat(#{$repeat}, minmax($width, 1fr));
 
-  @media(max-width: 560px){
-    grid-template-columns: 1fr;
+  @media (width < 560px){
+    grid-template-columns: $mobile-template;
   }
 }
 

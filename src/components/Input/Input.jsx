@@ -9,7 +9,7 @@ import MultiselectInput from './MultiSelect'
 const RenderInput = (props) => {
   const { type, ...rest } = props
 
-  switch (type) {
+  switch (type){
     case 'password':
       return <PasswordInput {...props} />
     case 'select':
@@ -31,7 +31,7 @@ const hasInputValue = (value) => {
 }
 
 function Input(props) {
-  const { type = 'text', error, touched, name, id, displayName, value, placeholder, required, className, labelOutside = false, ...rest } = props
+  const { type = 'text', error, touched, name, id, displayName, value, placeholder, required, className, labelOutside = false, span, onChange = () => {}, onBlur = () => {}, ...rest } = props
 
   if(['image', 'checkbox', 'radio', 'button', 'submit', 'reset', 'range', 'color'].includes(type)) return null
 
@@ -42,7 +42,7 @@ function Input(props) {
   const isControlled = Object.prototype.hasOwnProperty.call(props, 'value')
 
   return (
-    <div className={cn('flex-col gap-5', s.inputCont, { [s.toTop]: isFloatingLabelTop })}>
+    <div className={cn('flex-col gap-5', s.inputCont, { [s.toTop]: isFloatingLabelTop, [s.span]: span })}>
       <div className='pos-r flex-col'>
         {displayName &&
           <span className={cn(s.textLabel, { [s.labelInside]: !labelOutside})}>
@@ -60,6 +60,8 @@ function Input(props) {
             name={name}
             {...(isControlled ? { value } : {})}
             placeholder={((labelOutside && displayName) || !displayName) ? placeholder : null}
+            onChange={onChange}
+            onBlur={onBlur}
             required={required}
             className={cn(className, { [s.error]: showError })}
             aria-invalid={showError}

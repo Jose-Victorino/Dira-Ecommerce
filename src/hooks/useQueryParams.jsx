@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
 
 export default function useQueryParams({ shape, onError = 'clear' }){
   const [searchParams, setSearchParams] = useSearchParams()
-  const [isError, setIsError] = useState(true)
+  let hasError = false
 
   const values = Object.entries(shape).reduce((acc, [key, schema = null]) => {
     let value = null
@@ -13,7 +13,7 @@ export default function useQueryParams({ shape, onError = 'clear' }){
       const temp = searchParams.get(key)
       const parsed = temp ? parseInt(temp) : null
 
-      if(Number.isNaN(parsed)) setIsError(true)
+      if(Number.isNaN(parsed)) hasError = true
       else value = parsed
     }
     if(inferred === 'string'){
@@ -25,14 +25,14 @@ export default function useQueryParams({ shape, onError = 'clear' }){
     if(inferred === 'object'){
       const temp = searchParams.get(key)
       try{ value = JSON.parse(temp) }
-      catch{ setIsError(true) } 
+      catch{ hasError = true } 
     }
     
     if(value !== null && schema){
       try{
         schema.validateSync(value)
       } catch{
-        setIsError(true)
+        hasError = true
         value = null
       }
     }
@@ -41,19 +41,27 @@ export default function useQueryParams({ shape, onError = 'clear' }){
   }, {})
   
   useEffect(() => {
-    if(!isError) return
+    if(!hasError) return
     
     if(onError === 'clear')
       setSearchParams(new URLSearchParams())
-  }, [isError, onError, searchParams, setSearchParams])
+  }, [hasError, onError, searchParams, setSearchParams])
 
   const handleSetQuery = (params) => {
-    const next = new URLSearchParams()
-    Object.entries(params).forEach(([key, val]) => {
-      if(val === null || val === undefined) return
-      next.set(key, typeof val === 'object' ? JSON.stringify(val) : String(val))
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev)
+
+      Object.entries(params).forEach(([key, val]) => {
+        if(val == null || val === ''){
+          next.delete(key)
+        }
+        else{
+          next.set(key, typeof val === 'object' ? JSON.stringify(val) : String(val))
+        }
+      })
+
+      return next
     })
-    setSearchParams(next)
   }
 
   return ([values, handleSetQuery])

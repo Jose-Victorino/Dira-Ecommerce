@@ -25,6 +25,20 @@ export const abbreviateNumber = (num, toFixed = 1) => {
   return `${round}${units[tier]}`
 }
 
+export const formatToCurrency = (num) => {
+  if(num == Infinity || num == -Infinity) return null
+
+  return(
+    `₱${isNaN(num)
+      ? '0'
+      : num.toLocaleString('en-US', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      })
+    }`
+  )
+}
+
 export function wordCap(str) {
   str = str.toLowerCase()
 

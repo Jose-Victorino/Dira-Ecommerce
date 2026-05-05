@@ -3,7 +3,7 @@ import { useMemo, useReducer } from 'react'
 import { GlobalContext } from './Global.context'
 import { reducer, initialState } from './Global.store'
 
-function GlobalProvider({ children }){
+export function GlobalProvider({ children }){
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const value = useMemo(() => ({ state, dispatch }), [state])
@@ -14,5 +14,3 @@ function GlobalProvider({ children }){
     </GlobalContext.Provider>
   )
 }
-
-export default GlobalProvider

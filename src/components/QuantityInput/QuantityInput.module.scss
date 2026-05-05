@@ -1,0 +1,32 @@
+@use '@/styles/util' as u;
+
+.quantityInput{
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.25em 0.5em;
+  width: fit-content;
+  border: 1px solid u.$color-neutral-300;
+  border-radius: 3px;
+
+  button{
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  input{
+    background: none;
+    text-align: center;
+    width: 2ch;
+    border: none;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button{
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+  svg{
+    height: 1em;
+    width: 1em;
+  }
+}

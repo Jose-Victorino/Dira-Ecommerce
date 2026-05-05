@@ -1,0 +1,29 @@
+@use '@/styles/util' as u;
+
+.product{
+  display: flex;
+  gap: 30px;
+
+  & > *{
+    flex: 1 1 50%;
+  }
+}
+
+.error{
+  color: u.$color-error;
+}
+
+.reco{
+  @include u.grid-repeat-column(auto-fit, 200px, 1fr 1fr);
+  gap: 20px;
+}
+
+@include u.breakpoint(mobile-l){
+  .product{
+    flex-direction: column;
+    gap: 20px;
+  }
+  .top{
+    text-align: center;
+  }
+}

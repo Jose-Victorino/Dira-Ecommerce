@@ -9,6 +9,7 @@ import ContactUs from '@/pages/ContactUs/ContactUs'
 import Cart from '@/pages/Cart/Cart'
 import Profile from '@/pages/Profile/Profile'
 import Orders from '@/pages/Orders/Orders'
+import ProductDetails from './features/Product/pages/ProductDetails'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         <Route path='/cart' element={<Cart />}/>
         <Route path='/profile' element={<Profile />}/>
         <Route path='/orders' element={<Orders />}/>
+        <Route path='/products/:product_slug' element={<ProductDetails />} />
       </Route>
     </Routes>
   )

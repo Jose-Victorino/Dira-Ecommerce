@@ -7,6 +7,7 @@
 $allowed-vars: (
   bg, 
   color-text, color-text-dimmed, color-text-inv,
+  color-text-primary,
   color-border,
 );
 
@@ -16,6 +17,7 @@ $themes: (
     color-text: #{u.$color-neutral-950},
     color-text-dimmed: #{u.$color-neutral-600},
     color-text-inv: #{u.$color-neutral-50},
+    color-text-primary: #{u.$color-primary-600},
     color-border: #{u.$color-neutral-500},
   ),
   dark: (
@@ -23,6 +25,7 @@ $themes: (
     color-text: #{u.$color-neutral-50},
     color-text-dimmed: #{u.$color-neutral-400},
     color-text-inv: #{u.$color-neutral-50},
+    color-text-primary: #{u.$color-primary-500},
     color-border: #{u.$color-neutral-400},
   ),
 );
