@@ -12,9 +12,15 @@ dist
 dist-ssr
 *.local
 
+# test directory and files
 test
 *.test.js
 *.spec.js
+
+# Type directory and files
+types
+*.d.*.ts
+*.d.ts
 
 # Editor directories and files
 .vscode/*

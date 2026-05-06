@@ -95,7 +95,7 @@ function MultiSelect({ name, value = [], options, onChange, onBlur, className, .
                     className={cn(s.option, {[s.selected]: isSelected})}
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={() => toggleOption(val)}
-                    tabIndex='0'
+                    tabIndex={0}
                     aria-selected={isSelected}
                   >
                     {val}

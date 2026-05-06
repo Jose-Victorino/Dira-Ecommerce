@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -5,6 +7,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ParallaxProvider } from 'react-scroll-parallax'
 import { GlobalProvider } from '@/context/Global'
 import { scan } from 'react-scan'
+import axios from 'axios'
 
 import App from './App'
 
@@ -12,9 +15,11 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: (failureCount, error) => {
-        const status = error.response?.status
-        const RETRYABLE = new Set([408, 429, 502, 503, 504])
-        return RETRYABLE.has(status) && failureCount < 3
+        if(axios.isAxiosError(error)){
+          const RETRYABLE = new Set([408, 429, 502, 503, 504])
+          const status = error.response?.status
+          return RETRYABLE.has(status) && failureCount < 3
+        }
       },
       retryDelay: (attempt) => 2 ** attempt * 200,
     },
@@ -24,21 +29,20 @@ const queryClient = new QueryClient({
   }
 })
 
-function withProviders(providers, children) {
-  if(!providers.length) return children
-  const [Provider, props = {}] = providers[0]
-  return (
-    <Provider {...props}>
-      {withProviders(providers.slice(1), children)}
-    </Provider>
-  )
-}
+const withProviders = (providers, children) => (
+  providers.reduce((acc, entry) => {
+    const [Provider, props] = Array.isArray(entry)
+      ? entry : [entry, {}]
+
+    return <Provider {...props}>{acc}</Provider>
+  }, children)
+)
 
 const providers = [
-  [BrowserRouter],
+  BrowserRouter,
   [QueryClientProvider, { client: queryClient }],
-  [ParallaxProvider],
-  [GlobalProvider],
+  ParallaxProvider,
+  GlobalProvider,
 ]
 
 const envType = import.meta.env.ENV_TYPE

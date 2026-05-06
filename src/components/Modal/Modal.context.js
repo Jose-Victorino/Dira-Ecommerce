@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
 
-export const ModalContext = createContext()
+export const ModalContext = createContext(null)
 
 export function useModal() {
   const ctx = useContext(ModalContext)

@@ -62,7 +62,7 @@ export function Modal({
   height = '525px',
   width = '700px',
 }){
-  const modalRef = useRef(false)
+  const modalRef = useRef(null)
   useClickOutside(modalRef, onClose)
   
   useEffect(() => {
@@ -73,7 +73,7 @@ export function Modal({
     const scrollbarGutter = documentElement.style.scrollbarGutter
     const root = document.getElementById('root')
 
-    root.inert = 'true'
+    root.inert = true
     body.style.overflow = 'hidden'
     documentElement.style.scrollbarGutter = 'auto'
     
@@ -102,7 +102,7 @@ export function Modal({
           className={s.modalContainer}
           style={{ height, width }}
           role="document"
-          tabIndex="-1"
+          tabIndex={-1}
           aria-modal='true'
         >
           {header ? header :

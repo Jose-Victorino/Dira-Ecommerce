@@ -5,7 +5,7 @@ import useToggle from '@/hooks/useToggle'
 import useClickOutside from '@/hooks/useClickOutside'
 import cn from 'classnames'
 
-import Logo from '@/Components/Logo/Logo'
+import Logo from '@/components/Logo/Logo'
 import Marquee from '@/components/Marquee/Marquee'
 
 import { scrollReset } from '@/library/Util'
@@ -172,7 +172,6 @@ function Navigation() {
       </header>
       <MobileNavigation
         currentLinks={currentLinks}
-        useClickOutside={useClickOutside}
         closeMenu={closeMenu}
         menuValue={menu.value}
       />
