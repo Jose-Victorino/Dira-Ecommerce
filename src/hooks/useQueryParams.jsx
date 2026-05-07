@@ -1,6 +1,28 @@
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
+/**
+ * @template T
+ * @typedef {[
+ *   Partial<T>,
+ *   (params: Partial<T>) => void
+ * ]} UseQueryParamsReturn
+ */
 
+/**
+ * @template {Record<string, any>} T
+ * @param {{
+ *   shape: T,
+ *   onError?: 'clear'
+ * }} params
+ * @returns {UseQueryParamsReturn<{
+ *   [K in keyof T]:
+ *     T[K] extends import('yup').NumberSchema ? number :
+ *     T[K] extends import('yup').StringSchema ? string :
+ *     T[K] extends import('yup').ArraySchema<any> ? any[] :
+ *     T[K] extends import('yup').ObjectSchema<any> ? object :
+ *     unknown
+ * }>}
+ */
 export default function useQueryParams({ shape, onError = 'clear' }){
   const [searchParams, setSearchParams] = useSearchParams()
   let hasError = false

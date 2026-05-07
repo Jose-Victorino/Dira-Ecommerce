@@ -48,12 +48,6 @@ function Home() {
           <div className={s.categoryCont}>
             <ul className={s.categoryList}>
               <li>
-                <Link to='/shop?gender=men'>Men's Footwear</Link>
-              </li>
-              <li>
-                <Link to='/shop?gender=men'>Women's Footwear</Link>
-              </li>
-              <li>
                 <Link to='/shop?category=lifestyle'>Lifestyle</Link>
               </li>
               <li>

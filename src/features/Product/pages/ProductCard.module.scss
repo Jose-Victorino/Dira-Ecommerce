@@ -1,8 +1,10 @@
 @use '@/styles/util' as u;
 
-.img{
-  background-image: u.$gr-light-gray;
-  aspect-ratio: 1;
-  object-fit: cover;
-  width: 100%;
+.outOfStock{
+  background-color: u.$color-neutral-950;
+  color: white;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5em 0.75em;
 }

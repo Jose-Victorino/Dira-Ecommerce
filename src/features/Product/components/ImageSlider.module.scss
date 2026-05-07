@@ -19,13 +19,13 @@
     flex: 0 0 100%;
     min-width: 0;
   }
-
-  img{
-    background-image: u.$gr-light-gray;
-    object-fit: cover;
-    height: 100%;
-  }
 }
+.img{
+  background-image: u.$gr-light-gray;
+  object-fit: cover;
+  height: 100%;
+}
+
 .prev, .next{
   position: absolute;
   display: flex;

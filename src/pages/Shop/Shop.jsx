@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import useQueryParams from '@/hooks/useQueryParams'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
+import { productService } from '@/service/crudService.tanstack'
 import cn from 'classnames'
 
 import Button from '@/components/Button/Button'
@@ -13,89 +14,79 @@ import * as Yup from 'yup'
 
 const PAGE_NAME = 'Shop'
 
-const PRODUCTS = [
-  {id: 1, name: 'Nike Air Max dimsum1', slug: 'nike-air-max', price: 1000},
-  {id: 2, name: 'Nike Air Max dimsum2', slug: 'nike-air-max', price: 1000},
-  {id: 3, name: 'Nike Air Max dimsum3', slug: 'nike-air-max', price: 1000},
-  {id: 4, name: 'Nike Air Max dimsum4', slug: 'nike-air-max', price: 1000},
-  {id: 5, name: 'Nike Air Max dimsum5', slug: 'nike-air-max', price: 1000},
-  {id: 6, name: 'Nike Air Max dimsum6', slug: 'nike-air-max', price: 1000},
-  {id: 7, name: 'Nike Air Max dimsum7', slug: 'nike-air-max', price: 1000},
-  {id: 8, name: 'Nike Air Max dimsum8', slug: 'nike-air-max', price: 1000},
-]
 const SORT_OPTIONS = {
   latest: 'Latest',
-  priceAsc: 'Price (Low to High)',
-  priceDesc: 'Price (High to Low)',
-  alphaAsc: 'Alphabetical (A-Z)',
-  alphaDesc: 'Alphabetical (Z-A)',
+  price_asc: 'Price (Low to High)',
+  price_desc: 'Price (High to Low)',
+  name_asc: 'Alphabetical (A-Z)',
+  name_desc: 'Alphabetical (Z-A)',
 }
-const GENDER_FILTER = [
-  {label: 'Man',    value: 'man'},
-  {label: 'Woman',  value: 'woman'},
-]
 const CATEGORY_FILTER = [
   {label: 'Lifestyle',  value: 'lifestyle'},
-  {label: 'Sports',     value: 'sport'},
+  {label: 'Sports',     value: 'sports'},
   {label: 'Running',    value: 'running'},
   {label: 'Slides',     value: 'slides'},
   {label: 'Laces',      value: 'laces'},
   {label: 'Shoe Care',  value: 'shoe care'},
 ]
 const SIZE_FILTER = [
-  {label: 'US 4',     value: 'us_4'},
-  {label: 'US 4.5',   value: 'us_4.5'},
-  {label: 'US 5',     value: 'us_5'},
-  {label: 'US 5.5',   value: 'us_5.5'},
-  {label: 'US 6',     value: 'us_6'},
-  {label: 'US 6.5',   value: 'us_6.5'},
-  {label: 'US 7',     value: 'us_7'},
-  {label: 'US 7.5',   value: 'us_7.5'},
-  {label: 'US 8',     value: 'us_8'},
-  {label: 'US 8.5',   value: 'us_8.5'},
-  {label: 'US 9',     value: 'us_9'},
-  {label: 'US 9.5',   value: 'us_9.5'},
-  {label: 'US 10',    value: 'us_10'},
-  {label: 'US 10.5',  value: 'us_10.5'},
-  {label: 'US 11',    value: 'us_11'},
-  {label: 'US 11.5',  value: 'us_11.5'},
-  {label: 'US 12',    value: 'us_12'},
+  {label: 'US 4',     value: 'US 4'},
+  {label: 'US 4.5',   value: 'US 4.5'},
+  {label: 'US 5',     value: 'US 5'},
+  {label: 'US 5.5',   value: 'US 5.5'},
+  {label: 'US 6',     value: 'US 6'},
+  {label: 'US 6.5',   value: 'US 6.5'},
+  {label: 'US 7',     value: 'US 7'},
+  {label: 'US 7.5',   value: 'US 7.5'},
+  {label: 'US 8',     value: 'US 8'},
+  {label: 'US 8.5',   value: 'US 8.5'},
+  {label: 'US 9',     value: 'US 9'},
+  {label: 'US 9.5',   value: 'US 9.5'},
+  {label: 'US 10',    value: 'US 10'},
+  {label: 'US 10.5',  value: 'US 10.5'},
+  {label: 'US 11',    value: 'US 11'},
+  {label: 'US 11.5',  value: 'US 11.5'},
+  {label: 'US 12',    value: 'US 12'},
 ]
 const COLOR_FILTER = [
-  {label: 'Beige',    value: 'beige'},
-  {label: 'Black',    value: 'black'},
-  {label: 'Blue',     value: 'blue'},
-  {label: 'Brown',    value: 'brown'},
-  {label: 'Gray',     value: 'gray'},
-  {label: 'Green',    value: 'green'},
-  {label: 'Orange',   value: 'orange'},
-  {label: 'Pink',     value: 'pink'},
-  {label: 'Purple',   value: 'purple'},
-  {label: 'Red',      value: 'red'},
-  {label: 'White',    value: 'white'},
-  {label: 'Yellow',   value: 'yellow'},
+  {label: 'Beige',    value: 'Beige'},
+  {label: 'Black',    value: 'Black'},
+  {label: 'Blue',     value: 'Blue'},
+  {label: 'Brown',    value: 'Brown'},
+  {label: 'Gray',     value: 'Gray'},
+  {label: 'Green',    value: 'Green'},
+  {label: 'Orange',   value: 'Orange'},
+  {label: 'Pink',     value: 'Pink'},
+  {label: 'Purple',   value: 'Purple'},
+  {label: 'Red',      value: 'Red'},
+  {label: 'White',    value: 'White'},
+  {label: 'Yellow',   value: 'Yellow'},
 ]
 
-const GENDER = ['man', 'woman']
-const CATEGORY = ['lifestyle', 'sport', 'running', 'slides', 'laces', 'shoe care']
-const SIZE = ['us_4', 'us_4.5', 'us_5', 'us_5.5', 'us_6', 'us_6.5', 'us_7', 'us_7.5', 'us_8', 'us_8.5', 'us_9', 'us_9.5', 'us_10', 'us_10.5', 'us_11', 'us_11.5', 'us_12']
-const COLOR = ['beige', 'black', 'blue', 'brown', 'gray', 'green', 'orange', 'pink', 'purple', 'red', 'white', 'yellow']
+const SORT = ['latest', 'price_asc', 'price_desc', 'name_asc', 'name_desc']
+const CATEGORY = ['lifestyle', 'sports', 'running', 'slides', 'laces', 'shoe care']
+const SIZE = ['US 4', 'US 4.5', 'US 5', 'US 5.5', 'US 6', 'US 6.5', 'US 7', 'US 7.5', 'US 8', 'US 8.5', 'US 9', 'US 9.5', 'US 10', 'US 10.5', 'US 11', 'US 11.5', 'US 12']
+const COLOR = ['Beige', 'Black', 'Blue', 'Brown', 'Gray', 'Green', 'Orange', 'Pink', 'Purple', 'Red', 'White', 'Yellow']
 
 function Shop() {
   const [filters, setFilters] = useQueryParams({
     shape: {
-      gender: Yup.string().oneOf(GENDER).optional(),
+      sortBy: Yup.string().oneOf(SORT).optional(),
       category: Yup.string().oneOf(CATEGORY).optional(),
       priceMin: Yup.number().min(0).optional(),
       priceMax: Yup.number().min(0).optional(),
-      size: Yup.string().oneOf(SIZE).optional(),
-      color: Yup.string().oneOf(COLOR).optional(),
+      variant: Yup.object({
+        size: Yup.string().oneOf(SIZE).optional(),
+        color: Yup.string().oneOf(COLOR).optional(),
+      }).optional(),
     }
   })
-  const [priceRange, setPriceRange] = useState({ min: filters.priceMin, max: filters.priceMax })
-  const [sort, setSort] = useState('latest')
+  const [priceRange, setPriceRange] = useState({ min: filters.priceMin ?? '', max: filters.priceMax ?? '' })
+  const [sort, setSort] = useState(filters.sortBy ?? 'latest')
 
   useDocumentTitle(`${PAGE_NAME} | Dira`)
+
+  const resProduct = productService.getList(filters)
 
   const applySort = (e) => {
     const value = e.target.value
@@ -104,14 +95,25 @@ function Shop() {
   }
 
   const applyFilter = (key, value) => {
+  if(key === 'size' || key === 'color') {
+    const currentVariant = filters?.variant ?? {}
+    const isSame = currentVariant[key] === value
+    const newVariant = { ...currentVariant, [key]: isSame ? undefined : value }
+
+    if(isSame) delete newVariant[key]
+
+    const isEmpty = Object.keys(newVariant).length === 0
+    setFilters({ variant: isEmpty ? null : newVariant })
+  } else{
     const newValue = filters?.[key] === value ? '' : value
     setFilters({ [key]: newValue })
   }
+}
 
   const applyPrice = () => {
     setFilters({
-      priceMin: priceRange.min,
-      priceMax: priceRange.max,
+      priceMin: Number(priceRange.min),
+      priceMax: Number(priceRange.max),
     })
   }
 
@@ -131,19 +133,6 @@ function Shop() {
             options={SORT_OPTIONS}
             onChange={applySort}
           />
-        </div>
-        <div>
-          <strong>Gender</strong>
-          <ul className={s.optionList}>
-            {GENDER_FILTER.map((opt) =>
-              <OptionItem
-                key={opt.label}
-                label={opt.label}
-                state={filters?.gender === opt.value}
-                setState={() => applyFilter('gender', opt.value)}
-              />
-            )}
-          </ul>
         </div>
         <div>
           <strong>Category</strong>
@@ -194,7 +183,7 @@ function Shop() {
               <OptionItem
                 key={opt.label}
                 label={opt.label}
-                state={filters?.size === opt.value}
+                state={filters?.variant?.size === opt.value}
                 setState={() => applyFilter('size', opt.value)}
               />
             )}
@@ -207,7 +196,7 @@ function Shop() {
               <OptionItem
                 key={opt.label}
                 label={opt.label}
-                state={filters?.color === opt.value}
+                state={filters?.variant?.color === opt.value}
                 setState={() => applyFilter('color', opt.value)}
               />
             )}
@@ -215,15 +204,15 @@ function Shop() {
         </div>
       </div>
       <div className='flex-col gap-20'>
-        <div>
+        {resProduct.isLoading ? <>Loading...</> :
           <ul className={s.productList}>
-            {PRODUCTS.map((p) =>
+            {resProduct.data?.map((p) =>
               <li key={p.id}>
                 <ProductCard product={p}/>
               </li>
             )}
           </ul>
-        </div>
+        }
       </div>
     </div>
   )

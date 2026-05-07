@@ -22,6 +22,8 @@ const queryClient = new QueryClient({
         }
       },
       retryDelay: (attempt) => 2 ** attempt * 200,
+      retryOnMount: false,
+      refetchOnWindowFocus: false,
     },
     mutations: {
       retry: false,
