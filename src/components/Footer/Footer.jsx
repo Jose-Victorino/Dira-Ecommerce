@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router'
 import cn from 'classnames'
 
-import Logo from '@/Components/Logo/Logo'
+import Logo from '@/components/Logo/Logo'
 
 import { scrollReset } from '@/library/Util'
 

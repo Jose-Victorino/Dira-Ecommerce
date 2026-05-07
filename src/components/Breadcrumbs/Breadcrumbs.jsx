@@ -11,8 +11,8 @@ const dividers = {
   slash: '/',
 }
 
-export default function Breadcrumbs({ crumbs, divider }){
-  const dividerElement = dividers?.[divider] ?? dividers.slash
+export default function Breadcrumbs({ crumbs, divider = 'slash' }){
+  const dividerElement = dividers[divider]
   
   return (
     <nav className={s.breadcrumbs}>
