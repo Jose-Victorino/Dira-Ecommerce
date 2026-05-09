@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ParallaxProvider } from 'react-scroll-parallax'
 import { GlobalProvider } from '@/context/Global'
+import { CartProvider } from '@/features/Cart/hooks/useCart'
 import { scan } from 'react-scan'
 import axios from 'axios'
 
@@ -42,6 +43,7 @@ const withProviders = (providers, children) => (
 
 const providers = [
   BrowserRouter,
+  CartProvider,
   [QueryClientProvider, { client: queryClient }],
   ParallaxProvider,
   GlobalProvider,

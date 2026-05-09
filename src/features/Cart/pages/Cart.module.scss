@@ -1,0 +1,59 @@
+@use '@/styles/util' as u;
+
+.shopLink{
+  &:hover{
+    text-decoration: underline;
+    color: u.$color-primary-600;
+  }
+}
+
+.cartTable{
+  width: 100%;
+
+  th{
+    text-align: start;
+    border-bottom: 1px solid u.$color-neutral-300;
+    padding: 8px;
+
+    &:nth-child(1){
+      width: 55%;
+    }
+    &:nth-child(2){
+      width: 30%;
+    }
+    &:nth-child(3){
+      width: 15%;
+    }
+  }
+  td{
+    padding: 10px 8px;
+  }
+  th, td{
+    &:first-child{
+      padding-left: 0;
+    }
+    &:last-child{
+      padding-right: 0;
+    }
+  }
+  svg{
+    stroke: u.$color-neutral-950;
+  }
+}
+.product{
+  img{
+    background-image: u.$gr-light-gray;
+    height: 100px;
+    width: 100px;
+  }
+
+  .variation{
+    color: u.$color-neutral-500;
+  }
+}
+
+.bottom{
+  background-color: u.$color-neutral-50;
+  border-radius: 6px;
+  box-shadow: u.$box-shadow;
+}

@@ -22,14 +22,14 @@ $size: (
 );
 
 @each $name, $value in $colors{
-  .color-#{$name} {
+  .color-#{$name}{
     --bg-color: #{$value};
     --bg-hover: #{color.adjust($value, $lightness: -8%)};
   }
 }
 
 @each $name, $value in $size{
-  .sz-#{$name} {
+  .sz-#{$name}{
     --btn-size: #{$value};
   }
 }
@@ -44,9 +44,9 @@ $size: (
   align-items: center;
   font-size: var(--btn-size);
   padding: 0.625em 1em;
-  gap: 4px;
+  gap: 0.5em;
 
-  &:disabled {
+  &:disabled{
     cursor: not-allowed;
   }
   svg{
@@ -103,7 +103,7 @@ $size: (
   &:disabled{
     opacity: 0.8;
   }
-  &:hover:not(:disabled) {
+  &:hover:not(:disabled){
     background-color: var(--bg-hover);
     border-color: var(--bg-hover);
   }
@@ -120,7 +120,7 @@ $size: (
   &:disabled{
     opacity: 0.8;
   }
-  &:hover:not(:disabled) {
+  &:hover:not(:disabled){
     background-color: var(--bg-hover);
     border-color: var(--bg-hover);
     @include setColor($textLight);

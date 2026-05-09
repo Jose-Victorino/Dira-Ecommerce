@@ -4,6 +4,7 @@ import { useCart } from '@/features/Cart/hooks/useCart'
 import { productService } from '@/service/crudService.tanstack'
 import cn from 'classnames'
 
+import Loader from '@/components/Loader/Loader'
 import Button from '@/components/Button/Button'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs'
 import OptionItem from '@/components/OptionItem/OptionItem'
@@ -14,6 +15,7 @@ import ProductCard from './ProductCard'
 import { formatToCurrency } from '@/library/Util'
 
 import s from './ProductDetails.module.scss'
+import { toast } from '@/components/Toast'
 
 // TODO work on the "You may also like"
 function ProductDetails() {
@@ -80,7 +82,7 @@ function ProductDetails() {
 	}
 
 	const handleAddToCart = () => {
-		if(isNoStock) return
+		if(isNoStock || cart.addStatus.isPending) return
 
 		if(quantity < 1){
 			setError('Quantity must be at least 1')
@@ -93,7 +95,14 @@ function ProductDetails() {
 		}
 
 		setError('')
-		cart.add(resProduct.data.id, filteredVariants[0].id, quantity)
+		cart.add(filteredVariants[0].id, quantity, {
+			onSuccess: () => toast.success({
+				title: 'Item Added',
+				message: `${resProduct.data.name} has been added`,
+				duration: 3000,
+			}),
+			onError: () => toast.error('Something went wrong'),
+		})
 	}
 
   return (
@@ -151,7 +160,8 @@ function ProductDetails() {
 							<Button
 								text={isNoStock ? 'Out of Stock' : 'Add to Cart'}
 								span
-								disabled={isNoStock}
+            		icon={cart.addStatus.isPending && <Loader.Circular height='1.25em' />}
+								disabled={isNoStock || cart.addStatus.isPending}
 								onClick={() => handleAddToCart()}
 							/>
 						</div>

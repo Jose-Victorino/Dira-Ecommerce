@@ -69,11 +69,21 @@ const createCRUD = (name) => {
       ...options
     })
   )
+  /**
+   * @typedef {Object[any]} NewData
+   * @property {string|number} [id]
+   */
   const useAddData = (options = {}) => {
     const queryClient = useQueryClient()
 
     return useMutation({
-      mutationFn: (newValue) => api.post(basePath, newValue).then(r => r.data),
+      /**
+       * @param {NewData} data
+       */
+      mutationFn: (data) => api.post(basePath, data).then(r => r.data),
+      /**
+       * @param {NewData} newData
+       */
       onMutate: async (newData) => {
         await queryClient.cancelQueries({ queryKey: keys.all })
         const prev = queryClient.getQueriesData({ queryKey: keys.lists() })
@@ -96,23 +106,37 @@ const createCRUD = (name) => {
       ...options,
     })
   }
+  /**
+   * @typedef {Object} UpdateDataVariables
+   * @property {string | number} id
+   * @property {Object} [data]
+   * @property {Object} [params]
+   */
   const useUpdateData = (options = {}) => {
     const queryClient = useQueryClient()
 
     return useMutation({
+      /**
+       * @param {UpdateDataVariables} variables
+       */
       mutationFn: async ({ id, data, params }) => {
         const config = params ? { params } : undefined
         return api.put(`${basePath}/${id}`, data, config).then(r => r.data)
       },
+      /**
+       * @param {UpdateDataVariables} variables
+       */
       onMutate: async ({ id, data }) => {
         await queryClient.cancelQueries({ queryKey: keys.all })
 
         const prevRecord = queryClient.getQueryData(keys.record(id))
         const prevLists = queryClient.getQueriesData({ queryKey: keys.lists() })
 
-        queryClient.setQueryData(keys.record(id), (old) =>
-          old ? { ...old, ...data, _optimistic: true } : old
-        )
+        queryClient.setQueryData(keys.record(id), (old) => {
+          if(!old || typeof old !== 'object') return old
+
+          return old ? { ...old, ...data, _optimistic: true } : old
+        })
         queryClient.setQueriesData({ queryKey: keys.lists() }, (old) => {
           if(!Array.isArray(old)) return old
           return old.map((item) =>
@@ -143,7 +167,9 @@ const createCRUD = (name) => {
       mutationFn: async (id) => {
         const isMultiple = Array.isArray(id)
         const path = isMultiple ? basePath : `${basePath}/${id}`
-        const config = isMultiple ? { params: { ids: id } } : undefined
+        const config = isMultiple ? {
+          params: { ids: id },
+        } : undefined
         return api.delete(path, config).then(r => r.data)
       },
       onMutate: async (id) => {
@@ -185,7 +211,8 @@ const createCRUD = (name) => {
   }
 }
 
-export const userService = createCRUD('user')
+export const productService = createCRUD('product')
+export const cartService = createCRUD('cart')
 
 /*
 useQuery({
