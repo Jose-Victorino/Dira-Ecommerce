@@ -65,22 +65,22 @@ function Footer() {
           <p className='text-center'>Information</p>
           <ul className={cn('flex-col gap-10', s.navLink)}>
             <li>
-              <Link to='/privacy-policy' onClick={() => scrollReset()}>
+              <Link to='/policy/privacy' onClick={() => scrollReset()}>
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link to='/shipping-policy' onClick={() => scrollReset()}>
+              <Link to='/policy/shipping' onClick={() => scrollReset()}>
                 Shipping Policy
               </Link>
             </li>
             <li>
-              <Link to='/refund-policy' onClick={() => scrollReset()}>
+              <Link to='/policy/refund' onClick={() => scrollReset()}>
                 Refund Policy
               </Link>
             </li>
             <li>
-              <Link to='/terms-of-service' onClick={() => scrollReset()}>
+              <Link to='/policy/terms-of-service' onClick={() => scrollReset()}>
                 Terms of Services
               </Link>
             </li>

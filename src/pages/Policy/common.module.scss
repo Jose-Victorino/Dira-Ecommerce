@@ -1,0 +1,35 @@
+@use '@/styles/util' as u;
+
+.container{
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  max-width: 980px;
+  width: calc(100% - 20px);
+  margin-inline: auto;
+  padding-block: 40px;
+
+  & > div{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  h3{
+    text-align: center;
+  }
+
+  ul{
+    list-style-type: disc;
+    padding-left: 20px;
+  }
+
+  table{
+    th{
+      text-align: start;
+    }
+    th, td{
+      padding: 8px;
+      border: 1px solid u.$color-neutral-950;
+    }
+  }
+}
