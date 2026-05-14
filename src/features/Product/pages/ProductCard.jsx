@@ -6,7 +6,7 @@ import ImageSlider from '@/features/Product/components/ImageSlider'
 
 import s from './ProductCard.module.scss'
 
-function ProductCard({ product }) {  
+function ProductCard({ product }) {
   const isOutOfStock = product.variants.map(v => v.stock).every(s => s === 0)
 
   const formattedPrice = () => {

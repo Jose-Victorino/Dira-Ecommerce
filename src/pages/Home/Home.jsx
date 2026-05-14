@@ -14,22 +14,15 @@ import cat5 from '@/assets/E104BCFL.jpg'
 import cat6 from '@/assets/E10JG0H0.jpg'
 import cat7 from '@/assets/E10597EA.jpg'
 import bottomImg from '@/assets/E10IS1UP.jpg'
+import { productService } from '@/service/crudService.tanstack'
 
 const IMAGES = [cat1, cat2, cat3, cat4, cat5, cat6, cat7]
 
-const PRODUCTS = [
-  {name: 'lorem dimsum1', price: 1000},
-  {name: 'lorem dimsum2', price: 1000},
-  {name: 'lorem dimsum3', price: 1000},
-  {name: 'lorem dimsum4', price: 1000},
-  {name: 'lorem dimsum5', price: 1000},
-  {name: 'lorem dimsum6', price: 1000},
-  {name: 'lorem dimsum7', price: 1000},
-  {name: 'lorem dimsum8', price: 1000},
-]
-
 function Home() {
   useDocumentTitle(`Dira`)
+
+  const resTrending = productService.getList({path: 'trending'})
+  const resNewArrival = productService.getList({path: 'newArrival'})
 
   return (
     <>
@@ -39,7 +32,11 @@ function Home() {
       <section className='pad-block-60'>
         <div className='container flex-col a-end gap-10'>
           <h3 className='text-center w-100'>Now Trending</h3>
-          <Carousel id='now-trending' cards={PRODUCTS}/>
+          <Carousel
+            id='now-trending'
+            cards={resTrending.data}
+            isLoading={resTrending.isLoading}
+          />
         </div>
       </section>
       <section className='pad-block-60'>
@@ -75,7 +72,11 @@ function Home() {
       <section className='pad-block-60'>
         <div className='container flex-col a-end gap-10'>
           <h3 className='text-center w-100'>New Arrivals</h3>
-          <Carousel id='new-arrivals' cards={PRODUCTS}/>
+          <Carousel
+            id='now-trending'
+            cards={resNewArrival.data}
+            isLoading={resNewArrival.isLoading}
+          />
         </div>
       </section>
       <section

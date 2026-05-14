@@ -14,7 +14,7 @@
 }
 
 .reco{
-  @include u.grid-repeat-column(auto-fit, 200px, 1fr 1fr);
+  @include u.grid-repeat-column(auto-fill, 245px, 1fr 1fr);
   gap: 20px;
 }
 

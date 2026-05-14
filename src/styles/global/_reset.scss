@@ -45,11 +45,11 @@ h5{
 h1, h2, h3, h4, h5, h6{
   text-wrap: balance;
 }
-h6, p, a, b, li, th, td, button,
+h6, p, a, b, strong, li, th, td, button,
 input, textarea, select, option, label{
   font-size: u.$sz-14-16;
 }
-h2, h3, h4, h5, h6, p, a, li, th, td,
+h2, h3, h4, h5, h6, p, a, b, strong, li, th, td,
 input, textarea, select, option, label{
   line-height: 1.5;
 }

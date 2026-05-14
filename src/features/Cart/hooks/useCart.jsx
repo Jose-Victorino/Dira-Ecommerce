@@ -77,6 +77,7 @@ export function CartProvider({children}) {
   return (
     <CartContext.Provider value={{
       data,
+      isLoading: res.isLoading,
       add,
       updateQuantity,
       remove,

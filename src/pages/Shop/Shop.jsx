@@ -6,6 +6,7 @@ import cn from 'classnames'
 
 import Button from '@/components/Button/Button'
 import ProductCard from '@/features/Product/pages/ProductCard'
+import SkeletonCard from '@/features/Product/pages/SkeletonCard'
 import OptionItem from '@/components/OptionItem/OptionItem'
 import Input from '@/components/Input/Input'
 
@@ -86,7 +87,7 @@ function Shop() {
 
   useDocumentTitle(`${PAGE_NAME} | Dira`)
 
-  const resProduct = productService.getList(filters)
+  const {data = [], isLoading, isError, error} = productService.getList({params: filters})
 
   const applySort = (e) => {
     const value = e.target.value
@@ -95,20 +96,20 @@ function Shop() {
   }
 
   const applyFilter = (key, value) => {
-  if(key === 'size' || key === 'color') {
-    const currentVariant = filters?.variant ?? {}
-    const isSame = currentVariant[key] === value
-    const newVariant = { ...currentVariant, [key]: isSame ? undefined : value }
+    if(key === 'size' || key === 'color') {
+      const currentVariant = filters?.variant ?? {}
+      const isSame = currentVariant[key] === value
+      const newVariant = { ...currentVariant, [key]: isSame ? undefined : value }
 
-    if(isSame) delete newVariant[key]
+      if(isSame) delete newVariant[key]
 
-    const isEmpty = Object.keys(newVariant).length === 0
-    setFilters({ variant: isEmpty ? null : newVariant })
-  } else{
-    const newValue = filters?.[key] === value ? '' : value
-    setFilters({ [key]: newValue })
+      const isEmpty = Object.keys(newVariant).length === 0
+      setFilters({ variant: isEmpty ? null : newVariant })
+    } else{
+      const newValue = filters?.[key] === value ? '' : value
+      setFilters({ [key]: newValue })
+    }
   }
-}
 
   const applyPrice = () => {
     setFilters({
@@ -122,6 +123,43 @@ function Shop() {
     setPriceRange(prev => ({ ...prev, [name]: value }))
   }
 
+  const LoadData = () => {
+    if(isLoading){
+      return (
+        <ul className={s.productList}>
+          {Array.from({ length: 8 }).map((_, i) =>
+            <li key={i}>
+              <SkeletonCard />
+            </li>
+          )}
+        </ul>
+      )
+    }
+    if(isError){
+      return (
+        <div className={s.messageBox}>
+          <p>{error.message}</p>
+        </div>
+      )
+    }
+    if(!data.length){
+      return (
+        <div className={s.messageBox}>
+          <p>No products Found</p>
+        </div>
+      )
+    }
+    return (
+      <ul className={s.productList}>
+        {data.map((p) =>
+          <li key={p.id}>
+            <ProductCard product={p}/>
+          </li>
+        )}
+      </ul>
+    )
+  }
+  
   return (
     <div className={cn('container pad-block-40', s.shop)}>
       <div className={s.sidebar}>
@@ -204,15 +242,7 @@ function Shop() {
         </div>
       </div>
       <div className='flex-col gap-20'>
-        {resProduct.isLoading ? <>Loading...</> :
-          <ul className={s.productList}>
-            {resProduct.data?.map((p) =>
-              <li key={p.id}>
-                <ProductCard product={p}/>
-              </li>
-            )}
-          </ul>
-        }
+        <LoadData />
       </div>
     </div>
   )

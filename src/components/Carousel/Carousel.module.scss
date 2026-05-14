@@ -9,7 +9,7 @@
   touch-action: pan-y pinch-zoom;
   margin: 0 -0.5em;
 
-  li{
+  & > li{
     flex: 0 0 calc(100% / 5);
     min-width: 0;
     padding: 0 0.5em;

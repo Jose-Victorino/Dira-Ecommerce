@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ParallaxProvider } from 'react-scroll-parallax'
 import { GlobalProvider } from '@/context/Global'
 import { CartProvider } from '@/features/Cart/hooks/useCart'
+import { SkeletonTheme } from 'react-loading-skeleton'
 import { scan } from 'react-scan'
 import axios from 'axios'
 
@@ -42,6 +43,7 @@ const withProviders = (providers, children) => (
 )
 
 const providers = [
+  [SkeletonTheme, { baseColor:"hsl(0, 0%, 87%)", highlightColor: "hsl(0, 0%, 73%)"}],
   BrowserRouter,
   CartProvider,
   [QueryClientProvider, { client: queryClient }],

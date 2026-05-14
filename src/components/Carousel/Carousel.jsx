@@ -3,11 +3,12 @@ import useEmblaCarousel from 'embla-carousel-react'
 
 import s from './Carousel.module.scss'
 import ProductCard from '@/features/Product/pages/ProductCard'
+import SkeletonCard from '@/features/Product/pages/SkeletonCard'
 
 const prevSVG = <svg xmlns="http://www.w3.org/2000/svg" className='svg-md' viewBox="0 0 640 640"><path d="M201.4 297.4C188.9 309.9 188.9 330.2 201.4 342.7L361.4 502.7C373.9 515.2 394.2 515.2 406.7 502.7C419.2 490.2 419.2 469.9 406.7 457.4L269.3 320L406.6 182.6C419.1 170.1 419.1 149.8 406.6 137.3C394.1 124.8 373.8 124.8 361.3 137.3L201.3 297.3z"/></svg>
 const nextSVG = <svg xmlns="http://www.w3.org/2000/svg" className='svg-md' viewBox="0 0 640 640"><path d="M439.1 297.4C451.6 309.9 451.6 330.2 439.1 342.7L279.1 502.7C266.6 515.2 246.3 515.2 233.8 502.7C221.3 490.2 221.3 469.9 233.8 457.4L371.2 320L233.9 182.6C221.4 170.1 221.4 149.8 233.9 137.3C246.4 124.8 266.7 124.8 279.2 137.3L439.2 297.3z"/></svg>
 
-function Carousel({ id, cards = [] }) {
+function Carousel({ id, cards = [], isLoading }) {
   const [canPrev, setCanPrev] = useState(false)
   const [canNext, setCanNext] = useState(true)
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -52,7 +53,7 @@ function Carousel({ id, cards = [] }) {
         <button
           className={s.prev}
           onClick={scrollPrev}
-          disabled={!canPrev}
+          disabled={!canPrev || isLoading}
           aria-controls={carouselId}
           aria-label='Prev Product'
         >
@@ -61,7 +62,7 @@ function Carousel({ id, cards = [] }) {
         <button
           className={s.next}
           onClick={scrollNext}
-          disabled={!canNext}
+          disabled={!canNext || isLoading}
           aria-controls={carouselId}
           aria-label='Next Product'
         >
@@ -74,19 +75,33 @@ function Carousel({ id, cards = [] }) {
         id={carouselId}
         aria-live='polite'
       >
-        <ul className={s.slideList}>
-          {cards.map((p, i) =>
-            <li
-              key={p.name}
-              className='flex-col gap-10'
-              role='group'
-              aria-roledescription='slide'
-              aria-label={`Slide ${i + 1} of ${cards.length}`}
-            >
-              <ProductCard product={p}/>
-            </li>
-          )}
-        </ul>
+        {isLoading ?
+          <ul className={s.slideList}>
+            {Array.from({length: 5}).map((_, i) =>
+              <li
+                key={i}
+                className='flex-col gap-10'
+              >
+                <SkeletonCard />
+              </li>
+            )}
+          </ul> :
+          cards.length > 0 ?
+            <ul className={s.slideList}>
+              {cards.map((p, i) =>
+                <li
+                  key={p.name}
+                  className='flex-col gap-10'
+                  role='group'
+                  aria-roledescription='slide'
+                  aria-label={`Slide ${i + 1} of ${cards.length}`}
+                >
+                  <ProductCard product={p}/>
+                </li>
+              )}
+            </ul> :
+            <p>No products Found</p>
+        }
       </div>
     </div>
   )

@@ -2,6 +2,7 @@ import { lazy } from 'react'
 import { Routes, Route, Navigate } from 'react-router'
 
 import '@/styles/index.scss'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import LandingApp from './LandingApp'
 import DashboardApp from './DashboardApp'

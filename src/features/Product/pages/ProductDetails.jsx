@@ -4,6 +4,7 @@ import { useCart } from '@/features/Cart/hooks/useCart'
 import { productService } from '@/service/crudService.tanstack'
 import cn from 'classnames'
 
+import { toast } from '@/components/Toast'
 import Loader from '@/components/Loader/Loader'
 import Button from '@/components/Button/Button'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs'
@@ -11,25 +12,26 @@ import OptionItem from '@/components/OptionItem/OptionItem'
 import QuantityInput from '@/components/QuantityInput/QuantityInput'
 import ImageSlider from '../components/ImageSlider'
 import ProductCard from './ProductCard'
+import SkeletonCard from './SkeletonCard'
+import ProductDetailsSkeleton from './ProductDetailsSkeleton'
 
 import { formatToCurrency } from '@/library/Util'
 
 import s from './ProductDetails.module.scss'
-import { toast } from '@/components/Toast'
 
 // TODO work on the "You may also like"
 function ProductDetails() {
 	const { product_slug } = useParams()
 	const [selectedAttr, setSelectedAttr] = useState({})
 	const [quantity, setQuantity] = useState(1)
-	const [error, setError] = useState('')
+	const [errorMsg, setErrorMsg] = useState('')
 	const cart = useCart()
 
-	const resProduct = productService.getById(product_slug)
+	const resProduct = productService.getById({id: product_slug})
+	console.log(resProduct)
 
-	if(resProduct.isLoading) return <div className='container'>Loading...</div>
-	if(resProduct.isError) return <div className='container'>Something went wrong.</div>
-
+	if(resProduct.isLoading) return <ProductDetailsSkeleton />
+	if(resProduct.isError) return <div className='container pad-block-40'><h3 className='text-center'>{resProduct.error.message}</h3></div>
 	const stockedVariants = resProduct.data.variants.filter(({stock}) => stock > 0)
 
 	const filteredVariants = stockedVariants.filter(({ attribute }) => {
@@ -85,16 +87,16 @@ function ProductDetails() {
 		if(isNoStock || cart.addStatus.isPending) return
 
 		if(quantity < 1){
-			setError('Quantity must be at least 1')
+			setErrorMsg('Quantity must be at least 1')
 			return
 		}
 
 		if(!isSelectionComplete){	
-			setError('Please select a variant')
+			setErrorMsg('Please select a variant')
 			return
 		}
 
-		setError('')
+		setErrorMsg('')
 		cart.add(filteredVariants[0].id, quantity, {
 			onSuccess: () => toast.success({
 				title: 'Item Added',
@@ -156,7 +158,7 @@ function ProductDetails() {
 							/>
 						</div>
 						<div className='flex-col gap-5'>
-							{error && <p className={s.error}>{error}</p>}
+							{errorMsg && <p className={s.error}>{errorMsg}</p>}
 							<Button
 								text={isNoStock ? 'Out of Stock' : 'Add to Cart'}
 								span

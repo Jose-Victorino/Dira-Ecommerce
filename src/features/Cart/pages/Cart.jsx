@@ -9,6 +9,8 @@ import QuantityInput from '@/components/QuantityInput/QuantityInput'
 import { formatToCurrency } from '@/library/Util'
 
 import s from './Cart.module.scss'
+import Skeleton from 'react-loading-skeleton'
+import CartSkeleton from './CartSkeleton'
 
 const PAGE_NAME = 'Cart'
 
@@ -25,8 +27,8 @@ const CartItem = ({item}) => {
     <tr className={cn({[s.outOfStock]: item.stock === 0})}>
       <td>
         <div className={cn('flex gap-10', s.product)}>
-          <img src='qwdw' loading='lazy' alt={item.name} />
-          <div>
+          <img src='qwdw' className={s.img} loading='lazy' alt={item.name} />
+          <div className='w-100'>
             <p>{item.product_name}</p>
             {variationText &&
               <p className={s.variation}>
@@ -56,8 +58,49 @@ const CartItem = ({item}) => {
 }
 
 function Cart() {
-  const { data, totalQuantity, total } = useCart()
+  const { data, isLoading, totalQuantity, total } = useCart()
   useDocumentTitle(`${PAGE_NAME} | Dira`)
+  
+  const LoadCart = () => {
+    if(isLoading) return <CartSkeleton />
+
+    if(!data?.length) return (
+      <div className='container pad-block-30' style={{minHeight: 320}}>
+        <p className='text-center'>Your cart is empty</p>
+      </div>
+    )
+
+    return (
+      <>
+        <section className='container'>
+            <table className={s.cartTable}>
+              <tbody>
+                <tr>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                  <th>Subtotal</th>
+                </tr>
+              </tbody>
+              <tbody>
+                {data.map((c) =>
+                  <CartItem key={c.id} item={c} />
+                )}
+              </tbody>
+            </table>
+        </section>
+        <section className={cn('container flex j-end pad-15', s.bottom)}>
+          <div className='flex a-center gap-15'>
+            <strong>Total: ({totalQuantity} items)</strong>
+            <strong className={s.total}>{formatToCurrency(total)}</strong>
+            <Button
+              text='Checkout'
+              onClick={() => {}}
+            />
+          </div>
+        </section>
+      </>
+    )
+  }
 
   return (
     <div className='flex-col gap-10 pad-block-40'>
@@ -65,39 +108,7 @@ function Cart() {
         <h4>Your Cart</h4>
         <Link to='/shop' className={s.shopLink}>Continue Shopping</Link>
       </section>
-      {data?.length > 0 ?
-        <>
-          <section className='container'>
-              <table className={s.cartTable}>
-                <tbody>
-                  <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                  </tr>
-                </tbody>
-                <tbody>
-                  {data.map((c) =>
-                    <CartItem key={c.id} item={c} />
-                  )}
-                </tbody>
-              </table>
-          </section>
-          <section className={cn('container flex j-end pad-15', s.bottom)}>
-            <div className='flex a-center gap-15'>
-              <strong>Total: ({totalQuantity} items)</strong>
-              <strong className={s.total}>{formatToCurrency(total)}</strong>
-              <Button
-                text='Checkout'
-                onClick={() => {}}
-              />
-            </div>
-          </section>
-        </> :
-        <div className='container pad-block-30' style={{minHeight: 320}}>
-          <p className='text-center'>Your cart is empty</p>
-        </div>
-      }
+      <LoadCart />
     </div>
   )
 }
